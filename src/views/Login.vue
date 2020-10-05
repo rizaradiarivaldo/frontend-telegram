@@ -66,7 +66,7 @@ export default {
   },
   methods: {
     onLogin () {
-      console.log(this.form.email)
+      console.log(this.form)
       // this.form = ''
     }
   }

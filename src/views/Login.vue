@@ -7,7 +7,7 @@
         <p class="text-left mt-4 mb-4">Hi, Welcome back!</p>
 
         <div class="md-form">
-          <input type="text" v-model="form.email" id="email" class="form-control">
+          <input type="email" v-model="form.email" id="email" class="form-control">
           <label for="email">Email</label>
         </div>
 
@@ -54,6 +54,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
   name: 'Login',
   data () {
@@ -66,9 +67,25 @@ export default {
   },
   methods: {
     onLogin () {
-      console.log(this.form)
-      // this.form = ''
-    }
+      // console.log(this.form)
+      this.actionLogin(this.form)
+        .then((response) => {
+          alert(response)
+          if (response === 'Login success!') {
+            this.$router.push({
+              path: '/chatlist',
+              query: {
+                email: this.form.email
+              }
+            })
+          }
+        }).catch((err) => {
+          alert(err)
+        })
+    },
+    ...mapActions({
+      actionLogin: 'auth/login'
+    })
   }
 }
 </script>

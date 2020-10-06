@@ -13,6 +13,10 @@
 * {
   font-family: 'Rubik', sans-serif;
 }
+html, body {
+  max-width: 100%;
+  overflow-y: hidden;
+  }
 #app {
   /* font-family: 'Rubik', sans-serif; */
   /* font-family: Avenir, Helvetica, Arial, sans-serif;  */
@@ -21,7 +25,7 @@
   text-align: center;
   color: #2c3e50;
   background-color: #FAFAFA;;
-  height: 120vh;
+  height: 100vh;
 }
 
 #nav {

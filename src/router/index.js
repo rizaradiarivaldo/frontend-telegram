@@ -12,7 +12,7 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/login',
+    path: '/',
     name: 'Login',
     component: () => import('../views/Login.vue')
   },
@@ -27,7 +27,7 @@ const routes = [
     component: () => import('../views/Forgotpassword.vue')
   },
   {
-    path: '/',
+    path: '/chatlist',
     name: 'Chatlist',
     component: () => import('../views/Chatlist.vue'),
     meta: {
@@ -53,11 +53,11 @@ router.beforeEach((to, from, next) => {
       next()
     } else {
       next({
-        path: '/login'
+        path: '/'
       })
     }
   } else {
-    next() // make sure to always call next()!
+    next()
   }
 })
 

@@ -2,7 +2,7 @@
 <div class="container-fluid">
   <div class="row d-flex justify-content-center main-page">
     <div class="col-lg-4 col-11  main-register p-4">
-      <form>
+      <form @submit.prevent="onRegister()">
         <div class="row">
           <div class="col-lg-1 col-1">
             <router-link to="/login">
@@ -21,7 +21,7 @@
         </div>
 
         <div class="md-form">
-          <input type="text" v-model="form.email" id="email" class="form-control">
+          <input type="email" v-model="form.email" id="email" class="form-control">
           <label for="email">Email</label>
         </div>
 
@@ -57,6 +57,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
   name: 'Register',
   data () {
@@ -67,6 +68,20 @@ export default {
         password: ''
       }
     }
+  },
+  methods: {
+    onRegister () {
+      // console.log(this.form)
+      this.actionRegister(this.form)
+        .then((response) => {
+          alert(response)
+        }).catch((err) => {
+          alert(err)
+        })
+    },
+    ...mapActions({
+      actionRegister: 'auth/register'
+    })
   }
 }
 </script>

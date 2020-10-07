@@ -74,7 +74,11 @@ export default {
       // console.log(this.form)
       this.actionRegister(this.form)
         .then((response) => {
-          alert(response)
+          if (response === 'Register success!') {
+            window.location = '/login'
+          } else {
+            alert(response)
+          }
         }).catch((err) => {
           alert(err)
         })

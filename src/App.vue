@@ -13,9 +13,12 @@
 * {
   font-family: 'Rubik', sans-serif;
 }
-html, body {
-  max-width: 100%;
-  overflow-y: hidden;
+
+  @media (min-width: 576px) {
+    html, body {
+    max-width: 100%;
+    overflow-y: hidden;
+    }
   }
 #app {
   /* font-family: 'Rubik', sans-serif; */

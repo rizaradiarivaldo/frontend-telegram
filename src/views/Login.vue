@@ -70,14 +70,16 @@ export default {
       // console.log(this.form)
       this.actionLogin(this.form)
         .then((response) => {
-          alert(response)
           if (response === 'Login success!') {
-            this.$router.push({
-              path: '/chatlist',
-              query: {
-                email: this.form.email
-              }
-            })
+            // this.$router.push({
+            //   path: '/',
+            //   query: {
+            //     email: this.form.email
+            //   }
+            // })
+            window.location = '/'
+          } else {
+            alert(response)
           }
         }).catch((err) => {
           alert(err)

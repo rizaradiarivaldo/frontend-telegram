@@ -26,6 +26,9 @@ const actions = {
         .post(`${URL}/users/login`, payload)
         .then(response => {
           if (response.data.message === 'Login success!') {
+            // console.log(response.data.data.email)
+            localStorage.setItem('image', response.data.data.image)
+            localStorage.setItem('email', response.data.data.email)
             localStorage.setItem('token', response.data.data.token)
             resolve(response.data.message)
           } else {

@@ -6,28 +6,41 @@
       <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <form>
+            <form @submit.prevent="updateMessage()" enctype="multipart/form-data">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Profile</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
                 <div class="form-group">
-                  <label for="formGroupExampleInput">Example label</label>
-                  <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
+                  <label for="name">Name</label>
+                  <input type="text" class="form-control" v-model="form.name" id="name">
                 </div>
                 <div class="form-group">
-                  <label for="formGroupExampleInput2">Another label</label>
-                  <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input">
+                  <label for="phone">Phone</label>
+                  <input type="text" class="form-control" v-model="form.phone" id="phone">
                 </div>
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
+                <div class="form-group">
+                  <label for="bio">Bio</label>
+                  <textarea class="form-control" id="bio" rows="3" v-model="form.bio" placeholder="Bio..."></textarea>
+                </div>
+
+                <label for="image">Image</label>
+                <div class="input-group mb-3">
+                  <div class="custom-file">
+                    <input type="file"  @change="process($event)"  class="custom-file-input" id="inputGroupFile02">
+                    <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+                  </div>
+                </div>
+
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Edit</button>
+              </div>
+          </form>
           </div>
         </div>
       </div>
@@ -46,7 +59,7 @@
                 </div>
                 <div class="dropdown-menu">
                   <a class="dropdown-item" @click="onLogout()">Logout</a>
-                  <a class="dropdown-item" data-toggle="modal" data-target="#exampleModal" >Modal</a>
+                  <a class="dropdown-item" data-toggle="modal" data-target="#exampleModal" >Edit Profile</a>
 
                 </div>
               </div>
@@ -55,6 +68,8 @@
           <div class="row">
             <div class="col-lg-12">
               <img :src="`http://localhost:3000/${senderImage}`" width="30%">
+              <p>{{dataSender}}</p>
+              <p>{{name}}</p>
             </div>
           </div>
           <div class="row">
@@ -108,7 +123,6 @@
                         <div class="col-lg-2 col-2">
                           <p class="font-weight-bold">15.20</p>
                           <p
-                            style=""
                             class="notice-count d-flex align-items-end"
                           >
                             <span>1</span>
@@ -131,15 +145,15 @@
           >
             <div class="col-lg-8 col-8 text-left pt-4 pl-2 pr-2">
               <div class="row">
-                <div class="col-lg-1">
+                <div class="col-lg-1 col-3">
                   <img
                     width="70px"
                     :src="`http://localhost:3000/${imageName}`"
                   />
                 </div>
-                <div class="col-lg-4 ml-4">
-                  <p class="mt-1 font-weight-bold">{{ userReceiver }}</p>
-                  <p style="margin-top: -10px">Online</p>
+                <div class="col-lg-4 col-9">
+                  <p class="mt-1 font-weight-bold ml-4">{{ userReceiver }}</p>
+                  <p style="margin-top: -10px" class="ml-4">Online</p>
                 </div>
               </div>
             </div>
@@ -174,7 +188,7 @@
             <div class="col-lg-12" v-for="(item, index) in chatPrivates" :key="index">
               <div class="row text-left" v-if="item.sender !== dataSender">
                 <div class="col-lg-12 col-12 d-flex align-items-end p-4 row-chat">
-                  <img src="../assets/img/profile1.svg" />
+                  <img  :src="`http://localhost:3000/${imageName}`" style="width: 50px;"/>
                   <p class="ml-4 bubble-your">
                     {{item.msg}}
                   </p>
@@ -187,7 +201,7 @@
                   <p class="mr-4 bubble-me">
                   {{item.msg}}
                   </p>
-                  <img src="../assets/img/profile3.svg" />
+                  <img :src="`http://localhost:3000/${senderImage}`" style="width: 50px;" />
                 </div>
               </div>
 
@@ -196,10 +210,10 @@
 
           <form @submit.prevent="sendMessage()">
             <div class="row d-flex align-items-center justify-content-center">
-              <div class="col-lg-11 col-11 ">
+              <div class="col-lg-11 col-9 ">
                 <input type="text" class="form-control" placeholder="Ketik pesan" v-model="chatData"/>
               </div>
-              <div class="col-lg-1 col-1 text-right">
+              <div class="col-lg-1 col-3 text-right">
                 <div class="row">
                   <button class="btn btn-primary w-100">Send</button>
                 </div>
@@ -222,17 +236,22 @@
     <b-sidebar
       width="26%"
       id="sidebar-right"
-      title="Sidebar"
+      title="Profile"
       right
       shadow
     >
+    <p>My Location</p>
       <div class="px-3 py-2">
-        <p>
+        <!-- <p>
           Cras mattis consectetur purus sit amet fermentum. Cras
           justo odio, dapibus ac facilisis in, egestas eget quam.
           Morbi leo risus, porta ac consectetur ac, vestibulum at
           eros.
-        </p>
+        </p> -->
+        <google-maps class="map" :center="{
+            lat: -7.404402,
+            lng: 108.187274
+          }" :zoom="12"> </google-maps>
         <b-img
           src="https://picsum.photos/500/500/?image=54"
           fluid
@@ -247,9 +266,13 @@
 <script>
 import { URL } from '../helpers/env'
 import io from 'socket.io-client'
+import * as VueGoogleMaps from 'vue2-google-maps'
+import { mapActions } from 'vuex'
+
 export default {
   name: 'Chatlist',
   components: {
+    'google-maps': VueGoogleMaps.Map
   },
   data () {
     return {
@@ -265,7 +288,18 @@ export default {
       chatPrivates: [],
       imageName: null,
       historyMessages: [],
-      senderImage: localStorage.getItem('image')
+      senderImage: localStorage.getItem('image'),
+      name: localStorage.getItem('name'),
+      image: localStorage.getItem('image'),
+      newImage: '',
+      phone: localStorage.getItem('phone'),
+      bio: localStorage.getItem('bio'),
+      form: {
+        name: '',
+        newImages: '',
+        bio: '',
+        phone: ''
+      }
     }
   },
   methods: {
@@ -322,6 +356,32 @@ export default {
       })
       this.chatPrivates = chatPrivate
     },
+
+    process (event) {
+      this.form.newImages = event.target.files[0]
+    },
+
+    updateMessage () {
+      const fd = new FormData()
+      fd.append('name', this.form.name)
+      fd.append('image', this.form.newImages)
+      fd.append('bio', this.form.bio)
+      fd.append('phone', this.form.phone)
+      const data = {
+        email: this.dataSender,
+        formdata: fd
+      }
+      this.actionupdateData(data).then((response) => {
+        alert('Update data success')
+        window.location = '/'
+      }).catch((err) => {
+        alert(err)
+      })
+    },
+    ...mapActions({
+      actionupdateData: 'auth/updateData'
+    }),
+
     onLogout () {
       localStorage.removeItem('token')
       localStorage.removeItem('image')
@@ -348,6 +408,10 @@ export default {
 </script>
 
 <style scoped>
+.map {
+  width: 100%;
+  height: 300px;
+}
 .btn-important {
   background-color: #7e98df;
   border-radius: 20px;
